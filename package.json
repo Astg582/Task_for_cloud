@@ -1,0 +1,20 @@
+{
+  "name": "cloud",
+  "version": "1.0.0",
+  "description": "1cloud",
+  "main": "mian.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Astg582/Task_for_cloud.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Astg582/Task_for_cloud/issues"
+  },
+  "homepage": "https://github.com/Astg582/Task_for_cloud#readme"
+}

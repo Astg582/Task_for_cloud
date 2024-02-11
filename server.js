@@ -21,8 +21,8 @@ const server = http.createServer((req, res) => {
       basePath = createPath('index');
       res.statusCode = 200;
       break;
-    case '/about-us':
-	res.statusCode = 301;
+//    case '/about-us':
+//	res.statusCode = 301;
 	res.setHeader('Location', '/contacts');
 	res.end();
 	break;
