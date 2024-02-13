@@ -1,8 +1,8 @@
-<<<<<<< HEAD
 import { myFunction } from './myModule.js';
 
 myFunction();
-=======
+
+
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
