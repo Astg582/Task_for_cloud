@@ -1,61 +1,64 @@
 const express = require('express');
+const ejs = require('ejs');
 const path = require('path');
+const fs = require('fs');
+const multer = require('multer');
+const methodOverride = require('method-override');
+
 const app = express();
+const port = 3000;
 
-//app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'ejs-views'));
+app.set('view engine', 'ejs');
 
-const PORT = 3000;
+app.use(methodOverride('_method'));
+app.use(express.static(path.join(__dirname, 'public')));
 
-const createPath = (page) => path.resolve(__dirname, 'ejs-views', `${page}.ejs`);
-//const createPath = (page) => path.resolve(__dirname, 'views', `${page}.html`);
-
-
-app.listen(PORT, (error) => {
-  error ? console.log(error) : console.log(`Listening port ${PORT}`);
+const storage = multer.diskStorage({
+  destination: './public/post',
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+  }
 });
 
-app.use((req, res, next) => {
-	console.log(`path: ${req.path}`);
-	console.log(`method: ${req.method}`);
-	next();
+const upload = multer({ storage: storage });
+
+app.get('/', (req, res) => {
+ 
+  fs.readdir('./public/post', (err, files) => {
+    if (err) {
+      return res.status(500).send('Ошибка чтения папки с файлами.');
+    }
+
+    res.render('index', { files });
+  });
 });
 
-app.get('/',(req, res) => {
-	res.render(createPath('index'));
+app.post('/upload', upload.single('file'), (req, res) => {
+   res.redirect('/');
 });
 
-app.get('/',(req, res) => {
-	res.render(createPath('index'));
-});
+// file deletion
+app.delete('/delete', (req, res) => {
+	const fileName = req.query.file;  
 
-app.get('/Contacts',(req, res) => {
-	res.render(createPath('contacts'));
-});
+ if (!fileName) {
+    return res.status(400).send('File name is not.');
+  } 
 
-app.get('/about-us',(req, res) => {
-	res.render(createPath('contacts'));
-});
+  const filePath = path.join(__dirname, 'public', 'post', fileName);
 
-app.get('/posts/:id',(req, res) => {
-	res.render(createPath('post'));
-});
+  
+  fs.unlink(filePath, (err) => {
+    if (err) {
+      return res.status(500).send('Error file delete.');
+    }
 
-app.get('/post',(req, res) => {
-	res.render(createPath('post'));
-});
-
-app.get('/add-post',(req, res) => {
-	res.render(createPath('add-post'));
+     res.redirect('/');
+  });
 });
 
 
-
-
-app.use((req, res) => {
-	res
-	.status(404)
-	.render(createPath('error'));
+app.listen(port, () => {
+  console.log(`Server is running at http://localhost:${port}`);
 });
-
 

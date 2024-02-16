@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File list</title>
+</head>
+<body>
+  <h1>File list</h1>
+
+<!-- ubdate file -->
+<form action="/upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="file">
+    <button type="submit">Downloade file</button>
+  </form>
+
+  <% if (files.length > 0) { %>
+    <ul>
+      <% files.forEach(file => { %>
+        <li>
+          <a href="/post/<%= file %>"><%= file %></a>
+          <!-- JS  -->
+          <button onclick="deleteFile('<%= file %>')">delete</button>
+        </li>
+      <% }); %>
+    </ul>
+  <% } else { %>
+    <p>File list is empti</p>
+  <% } %>
+
+  <!-- DELETE- req -->
+  <script>
+    async function deleteFile(fileName) {
+      try {
+        const response = await fetch(`/delete?file=${fileName}&_method=DELETE`, {
+          method: 'POST',
+        });
+
+        if (!response.ok) {
+          throw new Error(`DELETE Error : ${response.statusText}`);
+        }
+
+        
+        window.location.reload();
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  </script>
+</body>
+</html>
+

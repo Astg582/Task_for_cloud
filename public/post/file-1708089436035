@@ -1,0 +1,49 @@
+#include <stdio.h>
+
+int main()
+{
+	/*int num = 42277;
+        float fl = 4.5;
+        char ch = 'E';
+
+	int* nump = &num;
+	float* Pfl = &fl;
+        char* Pch = &ch;
+        printf("%p*, %p*, %p*", nump, Pfl, Pch);
+	
+        int array1[] = {15, 2, 9, 15, 67};
+	int* arr = array1;
+
+
+
+	for(int j = 0; j < 5; j++ ) 
+	{
+			
+	printf("%d", *arr);  
+        arr++;
+	}
+
+
+
+	char* Pha = NULL;
+        printf("%c", *Pha);
+        
+
+
+	int aet = 46;
+	int* paet = &aet;
+
+	printf("%d", *paet); 
+*/
+
+	unsigned int big = 3950617253;
+	char* bigP = (char*) &big;
+        char num1 = *(bigP + 1);
+	char num2 = *(bigP + 2);
+	*(bigP + 1) = num2;
+	*(bigP + 2) = num1;
+	printf("%u", big);
+
+	return 0;
+	
+}
