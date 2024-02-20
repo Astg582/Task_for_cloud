@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Post</title>
+    <!-- Link to your stylesheet if you have one -->
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+    <header>
+        <h1>Add New Post</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about-us">About Us</a></li>
+            <li><a href="/posts">All Posts</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section>
+            <h2>New Post Form</h2>
+            <!-- Your form for adding a new post goes here -->
+            <form action="/add-post" method="POST">
+                <!-- Include input fields for post title, content, etc. -->
+                <label for="postTitle">Post Title:</label>
+                <input type="text" id="postTitle" name="postTitle" required>
+
+                <label for="postContent">Post Content:</label>
+                <textarea id="postContent" name="postContent" rows="4" required></textarea>
+
+                <!-- Add more input fields as needed -->
+
+                <button type="submit">Add Post</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2022 Your Website. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
+
