@@ -6,7 +6,8 @@
 #include <QStringList>
 #include <QDebug>
 #include <QVBoxLayout>
-
+#include <algorithm>
+#include <climits>
 
 void sel_sort(int*, int);
 void insert_S(int*, int);
