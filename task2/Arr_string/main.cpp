@@ -88,6 +88,7 @@ int main(int argc, char *argv[])
                       qDebug() << "Second string:" << strC1;
                       strC = com_cat(strC,strC1);
                       qDebug() << "First string new:" << strC;
+
                       delete [] arr;
                       delete [] strC;
                       delete [] strC1;
