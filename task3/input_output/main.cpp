@@ -7,7 +7,7 @@ int main()
 {
    QTextStream out(stdout);
 
-   QString filename = "/home/astghik/Desktop/Task_for_cloud/task3/file.txt";
+   QString filename = "/home/astghik/Desktop/Task_for_cloud/task3/files/file.txt";
      QFile file(filename);
 
      if(file.open(QIODevice::WriteOnly)){
