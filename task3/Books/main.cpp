@@ -55,8 +55,8 @@ int main(int argc, char *argv[])
 
 
          myBook.setTitle("To Kill a Mockingbird");
-            myBook.setAuthor("Harper Lee");
-            myBook.setISBN("978-06-108-4");
+            myBook.setAuthor("Ernest Hemingway");
+            myBook.setISBN("908-06-108-4");
 
             qDebug() << "\nUpdated Book Details:";
                qDebug() << "Title:" << myBook.getTitle();
