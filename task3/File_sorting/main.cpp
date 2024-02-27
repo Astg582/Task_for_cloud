@@ -3,7 +3,17 @@
 #include <QFile>
 #include <QTextStream>
 #include <QDebug>
+#include <QInputDialog>
 #include <functional>
+#include <QApplication>
+#include <QFileDialog>
+#include <QMainWindow>
+#include <QPushButton>
+#include <QVBoxLayout>
+#include <QLabel>
+
+
+
 
 enum SortingStrategy {
     BubleSort,
@@ -11,29 +21,64 @@ enum SortingStrategy {
     SelectSort,
 };
 
-struct SortingOption {
-    SortingStrategy strategy;
-    std::function<void(QVector<int>&)> sortingFunction;
-
-    SortingOption(SortingStrategy s, std::function<void(QVector<int>&)> func)
-        : strategy(s), sortingFunction(func) {}
-};
 
 QVector<int> readIntArrayFromFile(const QString&);
 void buble( QVector<int>& arr);
 void insert_S(QVector<int>& arr);
 void sel_sort(QVector<int>& arr);
 
-int main()
-{
-    QString filename = "/home/astghik/Desktop/Task_for_cloud/task3/files/arr.txt";
+
+
+int main(int argc, char *argv[]) {
+    QApplication a(argc, argv);
+
+    QString filename = QFileDialog::getSaveFileName(nullptr, "Save File", "", "Text Files (*.txt);;All Files (*)");
+
+    if (filename.isEmpty()) {
+           qDebug() << "User canceled the file dialog or entered an empty file name.";
+           return -1;
+     } else {
+          qDebug() << "Selected file name: " << filename;
+       }
+
+
     QVector<int> integers = readIntArrayFromFile(filename);
+    if (integers.isEmpty()) {
+           qDebug() << "Failed to read integers from the file.";
+           return -1;
+       }
+      qDebug() << "input for file: " << integers;
 
-            qDebug() << "input for file: " << integers;
 
+            QString sortAlgorithm = QInputDialog::getItem(nullptr, "Input", "Select sorting algorithm:", {"Selection Sort", "Insertion Sort"});
+             void (*sortFunction)(QVector<int>&) = nullptr;
 
+             if (sortAlgorithm == "Selection Sort") {
+                     sortFunction = sel_sort;
+                 } else if (sortAlgorithm == "Insertion Sort") {
+                     sortFunction = insert_S;
+                 }  else if (sortAlgorithm == "Bubble Sort") {
+                     sortFunction = buble;
+                 } else {
 
-    return 0;
+                     qDebug() << "Invalid sorting algorithm choice.";
+                     return -1;
+                 }
+
+                  sortFunction(integers);
+                  qDebug() << "sorted data: " << integers;
+
+                   QFile file(filename);
+                   if(file.open(QIODevice::WriteOnly)){
+                       QTextStream out(&file);
+                       for (int value : integers) {
+                              out << value << endl;
+                          }
+                       file.close();
+                   }else {
+                   qWarning("could not open file for reading");
+                   }
+    return a.exec();
 }
 
 
